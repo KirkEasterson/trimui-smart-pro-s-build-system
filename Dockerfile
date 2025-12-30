@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM debian:bookworm-20251208-slim
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -16,22 +16,14 @@ RUN apt update && apt install -y \
 
 WORKDIR /sdk
 
-RUN wget -q https://github.com/trimui/toolchain_sdk_smartpro/releases/download/20231018/aarch64-linux-gnu-7.5.0-linaro.tgz && \
-    tar -xzf aarch64-linux-gnu-7.5.0-linaro.tgz -C /sdk && \
-    rm aarch64-linux-gnu-7.5.0-linaro.tgz
+RUN wget -q https://github.com/trimui/toolchain_sdk_smartpro_s/releases/download/20251208/sdk_tg5050_linux_v1.0.0.tgz  && \
+    tar -xzf sdk_tg5050_linux_v1.0.0.tgz -C /sdk && \
+    rm sdk_tg5050_linux_v1.0.0.tgz
 
-RUN wget -q https://github.com/trimui/toolchain_sdk_smartpro/releases/download/20231018/SDK_usr_tg5040_a133p.tgz && \
-    tar -xzf SDK_usr_tg5040_a133p.tgz -C /sdk && \
-    rm SDK_usr_tg5040_a133p.tgz
+ENV PATH="/sdk/sdk_tg5050_linux_v1.0.0/host/sdk_tg5050_linux_v1.0.0/bin:$PATH"
 
-RUN wget -q https://github.com/trimui/toolchain_sdk_smartpro/releases/download/20231018/SDL2-2.26.1.GE8300.tgz && \
-    tar -xzf SDL2-2.26.1.GE8300.tgz -C /sdk && \
-    rm SDL2-2.26.1.GE8300.tgz
-
-ENV PATH="/sdk/aarch64-linux-gnu-7.5.0-linaro/bin:$PATH"
-
-ENV SYSROOT="/sdk/usr"
-ENV SDL_DIR="/sdk/SDL2-2.26.1"
+ENV SYSROOT="/sdk/sdk_tg5050_linux_v1.0.0/host/usr"
+ENV SDL_DIR="/sdk/sdk_tg5050_linux_v1.0.0/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/SDL2"
 
 WORKDIR /app
 

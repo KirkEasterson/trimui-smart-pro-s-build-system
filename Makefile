@@ -1,19 +1,20 @@
 APP_LABEL = Trimui-App
-APP_DESCRIPTION = Program for the Trimui Smart Pro
+APP_DESCRIPTION = Program for the Trimui Smart Pro S
 
 APP_LABEL_SLUG = $(shell echo "$(APP_LABEL)" | tr ' ' '_')
 BUILD_DIR = build/$(APP_LABEL_SLUG)
 OUT = $(BUILD_DIR)/$(APP_LABEL_SLUG)
 
-TOOLCHAIN_DIR = /sdk/aarch64-linux-gnu-7.5.0-linaro
-SYSROOT_DIR = /sdk/usr
-SDL_DIR = /sdk/SDL2-2.26.1
+SDK_BASE = /sdk/sdk_tg5050_linux_v1.0.0/host
+TOOLCHAIN_DIR = $(SDK_BASE)/aarch64-buildroot-linux-gnu
+SYSROOT_DIR = $(TOOLCHAIN_DIR)/sysroot
+SDL_DIR = $(SYSROOT_DIR)/usr/include/SDL2
 
 # Compiler Setup
-CXX = $(TOOLCHAIN_DIR)/bin/aarch64-linux-gnu-g++
+CXX = $(SDK_BASE)/bin/aarch64-none-linux-gnu-g++
 CXXFLAGS = -I$(SDL_DIR)/include -I$(SYSROOT_DIR)/include -I.
 LDFLAGS = -L$(SYSROOT_DIR)/lib -L$(SYSROOT_DIR)/lib/mali -Wl,-rpath-link=$(SYSROOT_DIR)/lib/mali
-LIBS = -lSDL2 -lSDL2_ttf -lfreetype -lz -lbz2 -lGLESv2 -lEGL -lIMGegl -lsrv_um -lusc -lglslcompiler -lm
+LIBS = -lSDL2 -lSDL2_ttf -lfreetype -lz -lbz2 -lGLESv2 -lEGL -lm
 
 SRC = src/main.cpp
 
